@@ -266,77 +266,88 @@
 			>
 				<div class="grid md:grid-cols-5 h-full">
 					<!-- Left: Content (3/5) -->
-					<div class="md:col-span-3 flex flex-col justify-between p-8 md:p-12">
-						<div class="mb-auto">
-							<div
-								class="mb-8 inline-flex h-16 w-16 items-center justify-center rounded-xl shadow-md"
-								style="background-color: {userTypes[activeTab].color}10;"
-							>
-								{@html getIcon(userTypes[activeTab].icon, userTypes[activeTab].color)}
-							</div>
-
-							<h3 class="mb-3 text-2xl font-bold text-gray-800 md:text-3xl">{userTypes[activeTab].title}</h3>
-							<p class="mb-8 text-lg text-gray-600">{userTypes[activeTab].description}</p>
-
-							<div class="mb-8 p-6 bg-gray-50 rounded-xl">
-								<h4 class="mb-4 font-semibold text-gray-700 flex items-center">
-									<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" style="color: {userTypes[activeTab].color}" viewBox="0 0 20 20" fill="currentColor">
-										<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-									</svg>
-									Key Benefits
-								</h4>
-								<ul class="space-y-3">
-									{#each userTypes[activeTab].benefits as benefit}
-										<li class="flex items-start">
-											<svg
-												class="mr-2 h-5 w-5 mt-0.5 flex-shrink-0"
-												style="color: {userTypes[activeTab].color}"
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 20 20"
-												fill="currentColor"
-											>
-												<path
-													fill-rule="evenodd"
-													d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-													clip-rule="evenodd"
-												/>
-											</svg>
-											<span class="text-gray-700">{benefit}</span>
-										</li>
-									{/each}
-								</ul>
+					<div class="md:col-span-3 p-8 md:p-12">
+						<div class="mb-8">
+							<!-- Header with icon and title in horizontal layout -->
+							<div class="flex items-start">
+								<div
+									class="shrink-0 h-16 w-16 flex items-center justify-center rounded-xl shadow-md mr-5"
+									style="background-color: {userTypes[activeTab].color}10;"
+								>
+									{@html getIcon(userTypes[activeTab].icon, userTypes[activeTab].color)}
+								</div>
+								
+								<div class="flex-1">
+									<h3 class="text-2xl font-bold text-gray-800 md:text-3xl mb-2">{userTypes[activeTab].title}</h3>
+									<p class="text-lg text-gray-600">{userTypes[activeTab].description}</p>
+								</div>
 							</div>
 						</div>
 
-						<div>
-							<div class="mb-6 flex items-center gap-4">
-								<div class="flex-shrink-0 w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center" style="border: 2px solid {userTypes[activeTab].color}">
-									<span class="text-xl font-bold" style="color: {userTypes[activeTab].color}">{userTypes[activeTab].stat}</span>
+						<!-- Benefits section -->
+						<div class="mb-8 p-6 bg-gray-50 rounded-xl">
+							<h4 class="mb-4 font-semibold text-gray-700 flex items-center">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" style="color: {userTypes[activeTab].color}" viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+								</svg>
+								Key Benefits
+							</h4>
+							<ul class="space-y-3">
+								{#each userTypes[activeTab].benefits as benefit}
+									<li class="flex items-start">
+										<svg
+											class="mr-2 h-5 w-5 mt-0.5 flex-shrink-0"
+											style="color: {userTypes[activeTab].color}"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 20 20"
+											fill="currentColor"
+										>
+											<path
+												fill-rule="evenodd"
+												d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+												clip-rule="evenodd"
+											/>
+										</svg>
+										<span class="text-gray-700">{benefit}</span>
+									</li>
+								{/each}
+							</ul>
+						</div>
+
+						<!-- Stats and CTA section -->
+						<div class="mt-auto">
+							<div class="flex flex-wrap items-center gap-6 mb-6">
+								<div class="flex items-center gap-4">
+									<div class="flex-shrink-0 w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center" style="border: 2px solid {userTypes[activeTab].color}">
+										<span class="text-xl font-bold" style="color: {userTypes[activeTab].color}">{userTypes[activeTab].stat}</span>
+									</div>
+									<div>
+										<span class="block text-sm text-gray-500">{userTypes[activeTab].statLabel}</span>
+										<span class="block text-sm font-medium">Trust TrustMyTablet</span>
+									</div>
 								</div>
-								<div>
-									<span class="block text-sm text-gray-500">{userTypes[activeTab].statLabel}</span>
-									<span class="block text-sm font-medium">Trust TrustMyTablet</span>
+								
+								<div class="flex-grow md:text-right">
+									<button
+										class="inline-flex items-center justify-center px-6 py-3 font-medium text-white rounded-lg transition-all hover:shadow-lg hover:scale-105"
+										style="background-color: {userTypes[activeTab].color}"
+									>
+										<span>Get Started</span>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1"
+											viewBox="0 0 20 20"
+											fill="currentColor"
+										>
+											<path
+												fill-rule="evenodd"
+												d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+												clip-rule="evenodd"
+											/>
+										</svg>
+									</button>
 								</div>
 							</div>
-							
-							<button
-								class="inline-flex items-center justify-center px-6 py-3 font-medium text-white rounded-lg transition-all hover:shadow-lg"
-								style="background-color: {userTypes[activeTab].color}"
-							>
-								<span>Get Started</span>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="ml-2 h-5 w-5"
-									viewBox="0 0 20 20"
-									fill="currentColor"
-								>
-									<path
-										fill-rule="evenodd"
-										d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-										clip-rule="evenodd"
-									/>
-								</svg>
-							</button>
 						</div>
 					</div>
 
