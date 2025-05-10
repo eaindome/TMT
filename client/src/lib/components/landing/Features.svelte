@@ -140,15 +140,6 @@
             <div class="flex-1">
               <h3 class="text-xl font-semibold mb-2 text-gray-800">{feature.title}</h3>
               <p class="text-gray-600 leading-relaxed">{feature.description}</p>
-              
-              <!-- Subtle "Learn more" link -->
-              <!-- svelte-ignore a11y_invalid_attribute -->
-              <a href="#" class="mt-3 inline-flex items-center text-sm font-medium" style="color: {feature.color}">
-                Learn more
-                <svg class="w-4 h-4 ml-1 transition-transform duration-300 feature-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-              </a>
             </div>
           </div>
         </div>
@@ -190,16 +181,6 @@
   .feature-card:hover .feature-icon-container {
     transform: scale(1.1) rotate(3deg);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Arrow animation */
-  .feature-card:hover .feature-arrow {
-    transform: translateX(4px);
-  }
-  
-  /* Improved transition handling */
-  .feature-icon-container, .feature-arrow {
-    transition: all 0.3s ease;
   }
   
   /* Make sure the feature cards have consistent height within rows */
