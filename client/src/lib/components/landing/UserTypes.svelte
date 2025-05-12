@@ -317,7 +317,7 @@
 						<!-- Stats and CTA section -->
 						<div class="mt-auto">
 							<div class="flex flex-wrap items-center gap-6 mb-6">
-								<div class="flex items-center gap-4">
+								<!-- <div class="flex items-center gap-4">
 									<div class="flex-shrink-0 w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center" style="border: 2px solid {userTypes[activeTab].color}">
 										<span class="text-xl font-bold" style="color: {userTypes[activeTab].color}">{userTypes[activeTab].stat}</span>
 									</div>
@@ -325,7 +325,7 @@
 										<span class="block text-sm text-gray-500">{userTypes[activeTab].statLabel}</span>
 										<span class="block text-sm font-medium">Trust TrustMyTablet</span>
 									</div>
-								</div>
+								</div> -->
 								
 								<div class="flex-grow md:text-right">
 									<button
@@ -390,13 +390,17 @@
 		<!-- Bottom stats/CTA -->
 		<div class="mt-12 grid md:grid-cols-4 gap-6" in:fly={{ y: 20, duration: 700, delay: 700 }}>
 			{#each userTypes as userType, i}
-				<div 
+				<button 
 					class="bg-white rounded-xl p-6 transition-all hover:shadow-lg"
 					class:shadow-md={i === activeTab}
 					style={i === activeTab ? `border-top: 3px solid ${userType.color}` : ""}
 					on:click={() => setActiveTab(i)}
 					on:mouseenter={pauseRotation}
 					on:mouseleave={resumeRotation}
+					role="tab"
+					aria-selected={i === activeTab}
+					tabindex="0"
+					on:keydown={(e) => e.key === 'Enter' && setActiveTab(i)}
 				>
 					<div class="flex items-center gap-4">
 						<div
@@ -410,7 +414,7 @@
 							<p class="text-sm text-gray-500">{userType.stat} {userType.statLabel}</p>
 						</div>
 					</div>
-				</div>
+				</button>
 			{/each}
 		</div>
 	</div>

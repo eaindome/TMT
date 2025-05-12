@@ -3,7 +3,7 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 
 	// Types
-	type Variant = 'primary' | 'secondary' | 'success' | 'danger' | 'caution' | 'outline' | 'ghost';
+	type Variant = 'primary' | 'secondary' | 'success' | 'danger' | 'caution' | 'outline' | 'ghost' | 'inverse' | 'inverse-outline';
 	type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	type Shape = 'rounded' | 'pill' | 'square';
 
@@ -41,7 +41,9 @@
 		danger: 'bg-[#d32f2f] hover:bg-[#c62828] active:bg-[#b71c1c] text-white',
 		caution: 'bg-[#f4b400] hover:bg-[#f0a800] active:bg-[#e69c00] text-black',
 		outline: 'bg-white border border-[#1a5f4a] text-[#1a5f4a] hover:bg-gray-50 active:bg-gray-100',
-		ghost: 'bg-transparent text-[#1a5f4a] hover:bg-[#1a5f4a]/5 active:bg-[#1a5f4a]/10'
+		ghost: 'bg-transparent text-[#1a5f4a] hover:bg-[#1a5f4a]/5 active:bg-[#1a5f4a]/10',
+		inverse: 'bg-white text-[#1a5f4a] hover:bg-gray-100 active:bg-gray-200',
+        'inverse-outline': 'bg-transparent border-2 border-white text-white hover:bg-white/10 active:bg-white/20'
 	};
 
 	// Size classes with better proportions
@@ -276,6 +278,3 @@
 		box-shadow: none !important;
 	}
 </style>
-
-<!-- abenaindome0067@gmail.com
-abena_ind@25 -->
