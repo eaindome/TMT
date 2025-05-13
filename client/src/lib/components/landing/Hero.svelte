@@ -24,7 +24,14 @@
   <div class="absolute bottom-10 left-10 w-64 h-64 bg-[#0288d1]/15 rounded-full blur-3xl -z-10"></div>
   
   <!-- Pattern overlay -->
-  <div class="absolute inset-0 bg-[url('/assets/images/pattern-dots.svg')] opacity-5 z-0"></div>
+  <div class="absolute inset-0 opacity-5 z-0">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <pattern id="dots-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="3" cy="3" r="1.5" fill="#1a5f4a" />
+      </pattern>
+      <rect width="100%" height="100%" fill="url(#dots-pattern)" />
+    </svg>
+  </div>
   
   <div class="container mx-auto px-4 z-10 relative">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
@@ -76,7 +83,7 @@
                 <div class="flex -space-x-2">
                   {#each Array(3) as _, i}
                     <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-200 overflow-hidden shadow-md">
-                      <img class="w-full h-full object-cover" src={`/assets/images/user-${i+1}.jpg`} alt="User" />
+                      <img class="w-full h-full object-cover" src={`/images/user-${i+1}.jpg`} alt="User" />
                     </div>
                   {/each}
                 </div>
@@ -112,7 +119,7 @@
             <div class="relative z-10 mx-auto max-w-sm">
               <div class="relative">
                 <img 
-                  src="/assets/images/phone-mockup.png" 
+                  src="/images/phone-mockup.png" 
                   alt="TrustMyTablet App" 
                   class="w-full drop-shadow-2xl"
                 />
@@ -120,7 +127,7 @@
                 <!-- App screen overlay (optional) -->
                 <div class="absolute inset-0 flex items-center justify-center">
                   <img 
-                    src="/assets/images/app-screen.png" 
+                    src="/images/app-screen.png" 
                     alt="App Interface" 
                     class="w-[92%] h-[92%] mt-[4%] rounded-2xl object-cover"
                   />

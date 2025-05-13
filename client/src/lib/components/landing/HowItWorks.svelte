@@ -324,7 +324,7 @@
 					</div>
 					<!-- Placeholder image with better handling -->
 					<img
-						src="/assets/images/app-preview.jpg"
+						src="/images/app-preview.jpg"
 						alt="App Demo"
 						class="absolute inset-0 h-full w-full object-cover"
 						on:error={(event) => {

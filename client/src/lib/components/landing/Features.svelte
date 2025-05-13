@@ -76,7 +76,14 @@
     <div class="absolute right-1/4 top-1/4 w-20 h-20 rounded-full bg-[#4caf50]/15"></div>
     
     <!-- Grid pattern -->
-    <div class="absolute inset-0 bg-[url('/assets/images/grid-pattern.svg')] bg-center opacity-5"></div>
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" class="opacity-5">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a5f4a" stroke-width="0.5" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
   </div>
 
   <div class="container mx-auto px-4 relative z-10">

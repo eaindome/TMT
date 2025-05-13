@@ -10,7 +10,7 @@
 	<div class="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md border border-gray-100 transition-shadow duration-300 hover:shadow-lg">
 		<div>
 			<a href="/" class="flex justify-center transition-opacity hover:opacity-90">
-				<img class="h-12 w-auto" src="/assets/images/logo.svg" alt="TrustMyTablet" />
+				<img class="h-12 w-auto" src="/images/logo.svg" alt="TrustMyTablet" />
 			</a>
 			<h2 class="mt-6 text-center text-2xl font-extrabold text-gray-800">{title}</h2>
 			{#if subtitle}

@@ -15,7 +15,7 @@
 				'Personal medication history tracking'
 			],
 			color: '#4caf50',
-			image: '/assets/images/consumer-user.jpg',
+			image: '/images/consumer-user.jpg',
 			stat: '30M+',
 			statLabel: 'Protected Users'
 		},
@@ -30,7 +30,7 @@
 				'Detailed professional verification reports'
 			],
 			color: '#1a5f4a',
-			image: '/assets/images/pharmacist-user.jpg',
+			image: '/images/pharmacist-user.jpg',
 			stat: '75K+',
 			statLabel: 'Pharmacy Partners'
 		},
@@ -44,7 +44,7 @@
 				'Seamless EHR/EMR integration'
 			],
 			color: '#0288d1',
-			image: '/assets/images/healthcare-user.jpg',
+			image: '/images/healthcare-user.jpg',
 			stat: '12K+',
 			statLabel: 'Facilities'
 		},
@@ -58,7 +58,7 @@
 				'Advanced geographic insights and trends'
 			],
 			color: '#607d8b',
-			image: '/assets/images/regulator-user.jpg',
+			image: '/images/regulator-user.jpg',
 			stat: '45+',
 			statLabel: 'Agencies'
 		}
