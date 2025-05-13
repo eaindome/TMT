@@ -33,7 +33,7 @@
     </svg>
   </div>
   
-  <div class="container mx-auto px-4 z-10 relative">
+  <div class="container mx-auto px-4 z-10 relative pt-12">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
       <!-- Left side: Content -->
       <div class="lg:w-1/2">
