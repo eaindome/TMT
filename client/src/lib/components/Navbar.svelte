@@ -8,7 +8,8 @@
 	const links = [
 		{ name: 'Home', href: '/' },
 		{ name: 'About', href: '/about' },
-		{ name: 'Resource', href: '/resources' }
+		{ name: 'FAQ', href: '/faq' },
+		{ name: 'Contact', href: '/contact' },
 	];
 
 	const currentPath = derived(page, ($page) => $page.url.pathname);
