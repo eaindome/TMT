@@ -2,8 +2,7 @@
 	import { onMount } from 'svelte';
 	import AboutNav from './AboutNav.svelte';
     import Button from '$lib/components/Button.svelte';
-
-	let sectionsReady = true;
+	import Navbar from '$lib/components/Navbar.svelte';
 
 	// Simplify this for now and focus on layout integration
 	onMount(() => {
@@ -30,7 +29,7 @@
 	</div>
 
 	<!-- Main content with proper spacing -->
-	<div class="content-visible pt-6">
+		<div class="content-visible pt-14">
 		<!-- Hero Section with adjusted spacing to account for nav -->
 		<section id="mission" class="px-4 py-12 md:py-16">
 			<div class="mx-auto max-w-6xl">
@@ -379,7 +378,6 @@
 	h1,
 	h2,
 	h3,
-	h4,
 	span,
 	a {
 		opacity: 1;

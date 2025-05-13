@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Navbar from '$lib/components/Navbar.svelte';
   import Hero from '$lib/components/landing/Hero.svelte';
   import Features from '$lib/components/landing/Features.svelte';
   import UserTypes from '$lib/components/landing/UserTypes.svelte';
@@ -25,6 +26,7 @@
 </svelte:head>
 
 <div class="bg-[#f5f5f5]">
+  <Navbar />
   <Hero />  
   <Features />
   <UserTypes />
