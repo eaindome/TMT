@@ -7,7 +7,9 @@
 	let { children } = $props();
 </script>
 
-{@render children()}
+<div class="min-h-screen bg-[#f5f5f5]">
+    {@render children()}
+</div>
 
 {#if import.meta.env.DEV}
 	<DevHelper />
