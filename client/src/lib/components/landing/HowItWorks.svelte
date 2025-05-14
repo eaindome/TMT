@@ -342,7 +342,7 @@
 				</div>
 
 				<!-- Text content with better structure -->
-				<div class="text-center md:flex-1 md:text-left">
+				<div class="text-center md:flex-1 md:text-left ">
 					<h3 class="mb-3 text-2xl font-semibold text-[#1a5f4a]">See the App in Action</h3>
 					<p class="mb-4 leading-relaxed text-gray-700">
 						Watch our quick demo to see how easy it is to verify your medicine and protect yourself
