@@ -6,11 +6,13 @@
 	export let resourcesUrl = '/resources';
 </script>
 
-<div class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-	<div class="grid gap-4 md:grid-cols-2">
-		<!-- Support section -->
+<div class="grid gap-6 md:grid-cols-2">
+	<!-- Support Card -->
+	<div
+		class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md transition-all duration-300 hover:shadow-lg"
+	>
 		<div
-			class="flex flex-col justify-between bg-gradient-to-br from-[#1a5f4a]/5 to-[#1a5f4a]/15 p-8"
+			class="flex h-full flex-col justify-between bg-gradient-to-br from-[#1a5f4a]/5 to-[#1a5f4a]/15 p-8"
 		>
 			<div>
 				<div class="mb-5 flex items-start">
@@ -42,7 +44,7 @@
 				</div>
 			</div>
 
-			<div class="mt-4">
+			<div class="mt-auto pt-4">
 				<Button
 					variant="primary"
 					size="md"
@@ -69,10 +71,14 @@
 				</Button>
 			</div>
 		</div>
+	</div>
 
-		<!-- Resources section -->
+	<!-- Resources Card -->
+	<div
+		class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md transition-all duration-300 hover:shadow-lg"
+	>
 		<div
-			class="flex flex-col justify-between bg-gradient-to-br from-[#0288d1]/5 to-[#0288d1]/15 p-8"
+			class="flex h-full flex-col justify-between bg-gradient-to-br from-[#0288d1]/5 to-[#0288d1]/15 p-8"
 		>
 			<div>
 				<div class="mb-5 flex items-start">
@@ -104,7 +110,7 @@
 				</div>
 			</div>
 
-			<div class="mt-4">
+			<div class="mt-auto pt-4">
 				<Button
 					variant="secondary"
 					size="md"
