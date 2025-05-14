@@ -345,7 +345,8 @@
 						<div class="mt-auto">
 							<div class="mb-6 flex flex-wrap items-center gap-6">
 								<div class="flex-grow md:text-right">
-									<button
+									<a
+										href="/signup"
 										class="inline-flex items-center justify-center rounded-lg px-6 py-3 font-medium text-white transition-all hover:scale-105 hover:shadow-lg"
 										style="background-color: {userTypes[activeTab].color}"
 									>
@@ -362,7 +363,7 @@
 												clip-rule="evenodd"
 											/>
 										</svg>
-									</button>
+									</a>
 								</div>
 							</div>
 						</div>
