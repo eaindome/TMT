@@ -34,65 +34,64 @@
 			</p>
 
 			<div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-    <!-- Primary CTA -->
-    <a
-        href="/signup"
-        class="group relative w-full transform transition-all duration-300 hover:scale-105 sm:w-auto"
-    >
-        <!-- This glow effect needs to be positioned properly -->
-        <div
-            class="absolute -inset-0.5 rounded-full bg-[#4caf50]/50 blur-md transition-all duration-300 group-hover:opacity-80 group-hover:blur-xl"
-        ></div>
-        <Button
-            variant="primary"
-            size="lg"
-            elevation={true}
-            animateOnHover={true}
-            class="relative z-10 w-full bg-[#4caf50] text-white hover:bg-[#3d9140] sm:w-auto"
-        >
-            <span class="flex items-center">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="mr-2 h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                <!-- Primary CTA -->
+                <a
+                    href="/signup"
+                    class="group relative w-full transform transition-all duration-300 hover:scale-105 sm:w-auto"
                 >
-                    <path
-                        fill-rule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clip-rule="evenodd"
-                    />
-                </svg>
-                Join Beta Program
-            </span>
-        </Button>
-    </a>
+                    <!-- This glow effect needs to be positioned properly -->
+                    <div
+                        class="absolute -inset-0.5 rounded-full bg-[#4caf50]/50 blur-md transition-all duration-300 group-hover:opacity-80 group-hover:blur-xl"
+                    ></div>
+                    <Button
+                        variant="outline"
+                        size="lg"
+                        elevation={true}
+                        animateOnHover={true}
+                        
+                    >
+                        <span class="flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="mr-2 h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                            Join Beta Program
+                        </span>
+                    </Button>
+                </a>
 
-    <!-- Secondary CTA -->
-    <a href="/contact" class="w-full sm:w-auto">
-        <Button
-            variant="secondary"
-            size="lg"
-            elevation={false}
-            animateOnHover={true}
-            ripple={true}
-            class="w-full border-2 border-white/80 bg-transparent text-white hover:bg-white/10 sm:w-auto"
-        >
-            <span class="flex items-center">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="mr-2 h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                >
-                    <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
-                    <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
-                </svg>
-                Partner With Us
-            </span>
-        </Button>
-    </a>
-</div>
+                <!-- Secondary CTA -->
+                <a href="/contact" class="w-full sm:w-auto">
+                    <Button
+                        variant="kustom"
+                        size="lg"
+                        elevation={false}
+                        animateOnHover={true}
+                        ripple={true}
+                    >
+                        <span class="flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="mr-2 h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                                <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
+                            </svg>
+                            Partner With Us
+                        </span>
+                    </Button>
+                </a>
+            </div>
 
             <!-- Added trust indicators -->
             <div class="mt-10 flex flex-wrap items-center justify-center gap-6 text-white/70">
@@ -157,15 +156,7 @@
 		}
 	}
 
-	.group:hover .blur {
-		animation: pulse-glow 2s ease-in-out infinite;
-	}
-
-    .blur-md, .blur-xl {
+    .blur-md {
     filter: blur(12px);
-    }
-
-    .blur-xl {
-    filter: blur(24px);
     }
 </style>
