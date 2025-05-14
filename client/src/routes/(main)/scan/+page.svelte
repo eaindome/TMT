@@ -1,199 +1,149 @@
 <script lang="ts">
-	import { scan } from '$lib/stores/scan';
-	import { user, token } from '$lib/stores/user';
-	import { uploadScan } from '$lib/api/scan';
-	import { validateForm, scanSchema } from '$lib/utils/validation';
-	import { goto } from '$app/navigation';
-	import { toasts } from '$lib/stores/toasts';
+	import { onMount } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
-	import Card from '$lib/components/Card.svelte';
-	import Skeleton from '$lib/components/Skeleton.svelte';
-	import Alert from '$lib/components/Alert.svelte';
-	import { CameraIcon, ImageIcon } from 'svelte-feather-icons';
+	import ScanMethodSelector from '$lib/components/scans/ScanMethodSelector.svelte';
+	import FileUpload from '$lib/components/scans/FileUpload.svelte';
+	import CameraCapture from '$lib/components/scans/Capture.svelte';
+	import { goto } from '$app/navigation';
 
-	let file: File | null = null;
-	let batchNumber = '';
-	let error = '';
-	let filePreview: string | null = null;
-	let isDragging = false;
+	// Scan type: 'camera' or 'upload'
+	let scanMethod: 'camera' | 'upload' = 'camera';
+	let isScanning = false;
+	let scanComplete = false;
+	let capturedImage: string | null = null;
+	let fileToUpload: File | null = null;
+	let hasPermission = false;
+	let showPermissionAlert = false;
 
-	// Create file preview when file is selected
-	$: if (file) {
-		const reader = new FileReader();
-		reader.onload = (e) => {
-			filePreview = e.target?.result as string;
-		};
-		reader.readAsDataURL(file);
-	} else {
-		filePreview = null;
-	}
-
-	async function handleSubmit() {
-		if (!$user) {
-			goto('/login');
-			return;
-		}
-
-		error = '';
-
-		// Use the new Zod validation
-		const validation = validateForm(scanSchema, { batchNumber, photo: file });
-		if (!validation.success) {
-			error = Object.values(validation.errors || {})[0] || '';
-			toasts.error(error);
-			return;
-		}
-
-		// Use the store methods directly from the store object
-		scan.update((state) => ({ ...state, loading: true, error: null }));
-
-		try {
-			if (!$token) {
-				error = 'Authentication token is missing.';
-				toasts.error(error);
-				return;
-			}
-
-			const result = await uploadScan(file!, batchNumber, $token);
-
-			// Update the scan store with the new data
-			scan.update((state) => ({
-				...state,
-				scanId: result.id,
-				photoUrl: result.url,
-				batchNumber,
-				verdict: (result.verdict as any) || 'unknown',
-				loading: false,
-				error: null
-			}));
-
-			toasts.success('Scan uploaded successfully!');
-			goto('/result');
-		} catch (err) {
-			if (err instanceof Error) {
-				scan.update((state) => ({ ...state, loading: false, error: err.message }));
-				error = err.message;
-				toasts.error(error);
-			} else {
-				scan.update((state) => ({ ...state, loading: false, error: 'An unknown error occurred.' }));
-				error = 'An unknown error occurred.';
-				toasts.error(error);
+	onMount(() => {
+		// Check if camera is available
+		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+			navigator.mediaDevices
+				.getUserMedia({ video: true })
+				.then(() => {
+					hasPermission = true;
+				})
+				.catch(() => {
+					hasPermission = false;
+					if (scanMethod === 'camera') {
+						scanMethod = 'upload';
+						showPermissionAlert = true;
+					}
+				});
+		} else {
+			hasPermission = false;
+			if (scanMethod === 'camera') {
+				scanMethod = 'upload';
 			}
 		}
+	});
+
+	function handleImageCapture(event: CustomEvent) {
+		capturedImage = event.detail.image;
 	}
 
-	function handleDragOver(e: DragEvent) {
-		e.preventDefault();
-		isDragging = true;
+	function handleFileSelect(event: CustomEvent) {
+		fileToUpload = event.detail.file;
+		capturedImage = event.detail.preview;
 	}
 
-	function handleDragLeave() {
-		isDragging = false;
-	}
-
-	function handleDrop(e: DragEvent) {
-		e.preventDefault();
-		isDragging = false;
-
-		if (e.dataTransfer?.files?.length) {
-			file = e.dataTransfer.files[0];
+	function startScan() {
+		if (!capturedImage && scanMethod === 'camera') {
+			return;
 		}
+		
+		if (!fileToUpload && !capturedImage && scanMethod === 'upload') {
+			return;
+		}
+		
+		isScanning = true;
+		
+		// Simulate scan process
+		setTimeout(() => {
+			isScanning = false;
+			scanComplete = true;
+			
+			// Redirect to results page (with a small delay to show completion animation)
+			setTimeout(() => {
+				// In a real app, you'd pass the scan result ID or data
+				goto('/scan-result?result=verified');
+			}, 800);
+		}, 2000);
 	}
+
+	function resetScan() {
+		capturedImage = null;
+		fileToUpload = null;
+		scanComplete = false;
+	}
+
+	$: canScan = (scanMethod === 'camera' && capturedImage) || (scanMethod === 'upload' && fileToUpload);
 </script>
 
-<Card padding="lg" shadow="md">
-	<h1 class="text-trust-green mb-4 text-2xl font-bold">Scan Medicine</h1>
-	<p class="text-neutral-gray mb-6">
-		Upload a clear photo of the medicine packaging and enter the batch number.
-	</p>
+<div class="min-h-screen pt-6 pb-16">
+	<div class="container mx-auto max-w-3xl px-4">
+		<!-- Header -->
+		<div class="mb-8 text-center">
+			<h1 class="mb-2 text-3xl font-bold text-gray-800">Scan Medicine</h1>
+			<p class="text-lg text-[#607d8b]">
+				Verify your medicine's authenticity by uploading a photo or using your camera
+			</p>
+		</div>
 
-	{#if error}
-		<Alert message={error} type="error" className="mb-4" />
-	{/if}
-
-	<form on:submit|preventDefault={handleSubmit} class="space-y-4">
-		<div>
-			<label for="photo-upload" class="text-neutral-gray mb-1 block text-sm font-medium"
-				>Photo</label
-			>
-			<div
-				class="border-neutral-gray rounded-lg border-2 {isDragging
-					? 'border-trust-green bg-trust-green/10'
-					: 'border-dashed'} p-4 text-center transition-colors"
-				on:dragover={handleDragOver}
-				on:dragleave={handleDragLeave}
-				on:drop={handleDrop}
-				role="button"
-				tabindex="0"
-				aria-label="Upload photo by dragging and dropping"
-			>
-				<input
-					type="file"
-					accept="image/*"
-					on:change={(e) => {
-						const input = e.target as HTMLInputElement;
-						if (input && input.files) file = input.files[0];
-					}}
-					class="hidden"
-					id="photo-upload"
-					disabled={$scan.loading}
-				/>
-
-				{#if filePreview}
-					<div class="relative mx-auto max-w-xs">
-						<img src={filePreview} alt="Preview" class="mx-auto mb-2 max-h-40 rounded" />
-						<button
-							type="button"
-							class="absolute top-0 right-0 rounded-full bg-red-500 p-1 text-white"
-							on:click={() => (file = null)}
-							disabled={$scan.loading}
-						>
-							✕
-						</button>
-						<p class="text-trust-green text-sm">{file?.name}</p>
-					</div>
-				{:else}
-					<label for="photo-upload" class="cursor-pointer">
-						{#if $scan.loading}
-							<div class="flex animate-pulse flex-col items-center">
-								<div class="mb-2 h-8 w-8 rounded-full bg-neutral-200"></div>
-								<div class="h-4 w-32 rounded bg-neutral-200"></div>
-							</div>
-						{:else}
-							<CameraIcon class="text-trust-green mx-auto h-8 w-8" />
-							<p class="text-neutral-gray mt-2 text-sm">Drag and drop or click to upload</p>
-						{/if}
-					</label>
-				{/if}
+		{#if showPermissionAlert}
+			<div class="mb-6 rounded-lg bg-[#f4b400] p-4 text-black">
+				<p class="flex items-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd" 
+							d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" 
+							clip-rule="evenodd" />
+					</svg>
+					Camera access is required for scanning. Please enable camera permissions or use file upload instead.
+				</p>
 			</div>
-		</div>
+		{/if}
 
-		<div>
-			<label for="batchNumber" class="text-neutral-gray mb-1 block text-sm font-medium"
-				>Batch Number</label
-			>
-			<input
-				type="text"
-				id="batchNumber"
-				bind:value={batchNumber}
-				class="border-neutral-gray focus:ring-trust-green focus:border-trust-green w-full rounded-md border p-2"
-				placeholder="e.g., BATCH123"
-				disabled={$scan.loading}
-			/>
-		</div>
+		<!-- Scan Method Selector -->
+		<ScanMethodSelector bind:scanMethod hasPermission={hasPermission} />
 
-		<Button
-			type="submit"
-			variant="primary"
-			loading={$scan.loading}
-			disabled={$scan.loading || !file || !batchNumber}
-			fullWidth
-		>
-			{#if $scan.loading}
-				Analyzing Medicine...
+		<!-- Main Content -->
+		<div class="mb-8 overflow-hidden rounded-xl bg-white p-6 shadow-md">
+			{#if scanMethod === 'camera'}
+				<CameraCapture on:image-captured={handleImageCapture} capturedImage={capturedImage} />
 			{:else}
-				Analyze Now
+				<FileUpload on:file-selected={handleFileSelect} capturedImage={capturedImage} />
 			{/if}
-		</Button>
-	</form>
-</Card>
+		</div>
+
+		<!-- Action Buttons -->
+		<div class="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+			{#if capturedImage}
+				<Button variant="outline" on:click={resetScan}>
+					Reset
+				</Button>
+			{/if}
+			
+			<Button 
+				variant="primary" 
+				size="lg" 
+				fullWidth={true}
+				disabled={!canScan} 
+				loading={isScanning}
+				loadingText="Scanning..."
+				on:click={startScan}>
+				{#if scanComplete}
+					Scan Complete
+				{:else}
+					Verify Medicine
+				{/if}
+			</Button>
+		</div>
+
+		<div class="mt-8 text-center text-sm text-[#607d8b]">
+			<p>For best results, ensure good lighting and position the medicine packaging properly in frame.</p>
+			<p class="mt-2">
+				Having trouble? <a href="/help" class="text-[#0288d1] hover:underline">Visit our Help Center</a>
+			</p>
+		</div>
+	</div>
+</div>
