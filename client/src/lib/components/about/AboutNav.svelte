@@ -41,7 +41,7 @@
 		window.addEventListener('scroll', () => {
 			if (scrolling) return;
 
-			const scrollPosition = window.scrollY + 100;
+			const scrollPosition = window.scrollY + 110;
 
 			for (let i = sectionElements.length - 1; i >= 0; i--) {
 				const section = sectionElements[i];

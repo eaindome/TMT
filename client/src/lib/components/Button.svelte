@@ -3,7 +3,7 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 
 	// Types
-	type Variant = 'primary' | 'secondary' | 'success' | 'danger' | 'caution' | 'outline' | 'ghost' | 'inverse' | 'inverse-outline';
+	type Variant = 'primary' | 'secondary' | 'success' | 'danger' | 'caution' | 'outline' | 'ghost' | 'inverse' | 'inverse-outline' | 'custom';
 	type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	type Shape = 'rounded' | 'pill' | 'square';
 
@@ -43,7 +43,8 @@
 		outline: 'bg-white border border-[#1a5f4a] text-[#1a5f4a] hover:bg-gray-50 active:bg-gray-100',
 		ghost: 'bg-transparent text-[#1a5f4a] hover:bg-[#1a5f4a]/5 active:bg-[#1a5f4a]/10',
 		inverse: 'bg-white text-[#1a5f4a] hover:bg-gray-100 active:bg-gray-200',
-        'inverse-outline': 'bg-transparent border-2 border-white text-white hover:bg-white/10 active:bg-white/20'
+        'inverse-outline': 'bg-transparent border-2 border-white text-white hover:bg-white/10 active:bg-white/20',
+		'custom': 'bg-[#1a5f4a] text-white hover:bg-[#154739] active:bg-[#0f3529]'
 	};
 
 	// Size classes with better proportions
