@@ -136,17 +136,21 @@
 
 			<!-- Action Buttons -->
 			<div class="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center transition-all duration-500 ease-out delay-300 {animateIn ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}">
-				<Button variant="outline" on:click={saveResult}>
-					<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-						<path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
-					</svg>
-					Save Result
-				</Button>
 				<Button variant="primary" on:click={scanNew}>
-					<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-						<path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
-					</svg>
-					Scan New Medicine
+					<div class="flex items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+							<path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+						</svg>
+						<span>Scan New Medicine</span>
+					</div>
+				</Button>
+				<Button variant="outline" on:click={saveResult}>
+					<div class="flex items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+							<path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+						</svg>
+						<span>Save Result</span>
+					</div>
 				</Button>
 			</div>
 
