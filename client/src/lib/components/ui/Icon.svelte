@@ -45,6 +45,23 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h8m-8 6h16" />
     {:else if name === 'globe'}
       <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7.5 7.5 0 0021 12.79z" />
+    {:else if name === 'chevron-left'}
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    {:else if name === 'chevron-right'}
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    {:else if name === 'chevrons-left'}
+      <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+    {:else if name === 'chevrons-right'}
+      <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+    {:else if name === 'menu-fold'}
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7M16 18l-4-4 4-4" />
+    {:else if name === 'menu-unfold'}
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7M12 18l4-4-4-4" />
+    {:else if name === 'layout-sidebar'}
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5v14" />
+    {:else if name === 'arrow-left-right'}
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M7 11h10" />
     {:else}
       <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
     {/if}
