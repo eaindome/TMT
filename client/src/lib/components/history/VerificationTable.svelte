@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Verification } from '$lib/types/history.ts';
+	import { goto } from '$app/navigation';
 
 	export let verifications: Verification[] = [];
 
@@ -43,9 +44,10 @@
 
 	function handleViewResult(id: string) {
 		// This would navigate to the medicine detail page
-		console.log(`Viewing result for verification ${id}`);
+		// console.log(`Viewing result for verification ${id}`);
 		// In a real implementation, you would use SvelteKit's navigation:
 		// goto(`/medicine/${id}`);
+		goto(`/medicine/`);
 	}
 </script>
 

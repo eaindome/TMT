@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Verification } from '$lib/types/history.ts';
-	import Icon from '$lib/components/ui/Icon.svelte';
+	import { goto } from '$app/navigation';
 
 	export let verification: Verification;
 
@@ -62,7 +62,7 @@
 		// This would navigate to the medicine detail page
 		console.log(`Viewing result for verification ${id}`);
 		// In a real implementation, you would use SvelteKit's navigation:
-		// goto(`/medicine/${id}`);
+		goto(`/medicine/${id}`);
 	}
 
 	// Get status config
