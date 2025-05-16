@@ -10,6 +10,6 @@
     <title>Medicine Details | Fake Medicine Detection</title>
 </svelte:head>
 
-<div class="container mx-auto px-4 py-8">    
+<div class="container mx-auto px-4 py-8 -mt-12">    
     <MedicineDetailPage {medicineId} />
 </div>
