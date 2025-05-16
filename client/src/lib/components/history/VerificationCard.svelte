@@ -62,7 +62,7 @@
 		// This would navigate to the medicine detail page
 		console.log(`Viewing result for verification ${id}`);
 		// In a real implementation, you would use SvelteKit's navigation:
-		goto(`/medicine/${id}`);
+		goto(`/medicine/`);
 	}
 
 	// Get status config
@@ -94,10 +94,10 @@
 </script>
 
 <div
-	class="group relative overflow-hidden rounded-xl border bg-white shadow-sm transition-all duration-200 hover:shadow-md {statusConfig.borderColor}"
+	class="group relative overflow-hidden rounded-xl border bg-white shadow-sm transition-all duration-200 hover:shadow-md border-gray-200 hover:border-gray-300"
 >
 	<!-- Status indicator strip -->
-	<div class="absolute top-0 left-0 h-full w-1.5 {statusConfig.pillColor}"></div>
+	<div class="absolute top-0 left-0 h-full w-1 {statusConfig.pillColor}"></div>
 
 	<!-- Card content with padding accommodating the strip -->
 	<div class="p-5 pl-6">
