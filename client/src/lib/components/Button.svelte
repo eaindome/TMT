@@ -130,7 +130,8 @@
 	// Handle mouse events
 	function handleMouseDown(event: MouseEvent) {
 		if (!disabled && !loading) {
-			createRipple(event);
+			// createRipple(event);
+			// no need for a ripple effect
 		}
 	}
 
