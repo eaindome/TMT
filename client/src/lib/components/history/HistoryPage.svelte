@@ -144,7 +144,7 @@
 	$: endItem = Math.min(startItem + itemsPerPage - 1, filteredVerifications.length);
 </script>
 
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 -mt-5">
 	<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 		<!-- Page header -->
 		<div class="mb-8">
