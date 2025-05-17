@@ -133,7 +133,7 @@
 				</div>
 				{#if expanded}
 					<span class="ml-3 text-xl font-semibold text-gray-800" in:fade={{ duration: 200 }}>
-						TrustMyTablet
+						TrackMyMeds
 					</span>
 				{/if}
 			</a>
