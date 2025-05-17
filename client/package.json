@@ -66,6 +66,7 @@
     "vitest": "^3.0.0"
   },
   "dependencies": {
+    "date-fns": "^4.1.0",
     "firebase": "^11.7.1",
     "svelte-feather-icons": "^4.2.0",
     "zod": "^3.24.4"
