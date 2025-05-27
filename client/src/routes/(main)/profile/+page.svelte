@@ -1,146 +1,115 @@
+<!-- src/routes/profile/+page.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
-	type Status = 'success' | 'error' | 'warning' | 'info' | 'feature';
-	import { user, clearUser, token } from '$lib/stores/user';
-	import { getUserProfile } from '$lib/api/user';
-	import { logout } from '$lib/api/auth';
-	import { goto } from '$app/navigation';
-	import { toasts } from '$lib/stores/toasts';
-	import Card from '$lib/components/Card.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import Skeleton from '$lib/components/Skeleton.svelte';
-	import Badge from '$lib/components/Badge.svelte';
-
-	let loading = true;
-	let logoutLoading = false;
-	let userProfile = null;
-	let scanHistory: { createdAt: string; batchNumber: string; verdict: string }[] = [];
-	let userBadges: string[] = [];
-
-	// Function to map verdict strings to valid Badge status values
-	function mapVerdictToBadgeStatus(verdict: string): 'safe' | 'suspicious' | 'fake' | 'neutral' {
-		switch (verdict.toLowerCase()) {
-			case 'success':
-				return 'safe';
-			case 'error':
-				return 'fake';
-			case 'warning':
-				return 'suspicious';
-			case 'info':
-			case 'feature':
-			default:
-				return 'neutral';
-		}
+	import UserInfoCard from '$lib/components/profile/UserInfoCard.svelte';
+	import EditProfileTab from '$lib/components/profile/EditProfileTab.svelte';
+	import SubscriptionTab from '$lib/components/profile/SubscriptionTab.svelte';
+	import SecurityTab from '$lib/components/profile/SecurityTab.svelte';
+	import DeleteAccountTab from '$lib/components/profile/DeleteAccountTab.svelte';
+	
+	type Tab = 'profile' | 'subscription' | 'security' | 'delete';
+	
+	interface User {
+		id: string;
+		name: string;
+		email: string;
+		phone?: string;
+		role: 'Consumer' | 'Pharmacist' | 'Regulator';
+		isPremium: boolean;
+		profileImage?: string;
+		createdAt: string;
 	}
-
-	onMount(async () => {
-		if ($user && $token) {
-			try {
-				loading = true;
-				const profile = await getUserProfile($token);
-				userProfile = profile;
-				scanHistory = profile.scans || [];
-				userBadges = profile.badges || [];
-			} catch (error) {
-				console.error('Failed to load profile:', error);
-				toasts.error('Failed to load profile data');
-			} finally {
-				loading = false;
-			}
-		} else {
-			loading = false;
-		}
+	
+	interface SubscriptionData {
+		plan: string;
+		nextBillingDate: string;
+		status: 'active' | 'cancelled' | 'expired';
+	}
+	
+	let activeTab: Tab = 'profile';
+	let user: User = {
+		id: '1',
+		name: 'Dr. Sarah Johnson',
+		email: 'sarah.johnson@hospital.com',
+		phone: '+1 (555) 123-4567',
+		role: 'Pharmacist',
+		isPremium: true,
+		profileImage: '',
+		createdAt: '2024-01-15'
+	};
+	
+	let subscription: SubscriptionData = {
+		plan: 'Professional',
+		nextBillingDate: '2024-07-15',
+		status: 'active'
+	};
+	
+	const tabs = [
+		{ id: 'profile', label: 'Profile', icon: '👤' },
+		{ id: 'subscription', label: 'Subscription', icon: '💳', premiumOnly: true },
+		{ id: 'security', label: 'Security', icon: '🔒' },
+		{ id: 'delete', label: 'Delete Account', icon: '🗑️' }
+	] as const;
+	
+	function setActiveTab(tab: Tab) {
+		activeTab = tab;
+	}
+	
+	onMount(() => {
+		// Load user data from API or store
 	});
-
-	async function handleLogout() {
-		try {
-			logoutLoading = true;
-			await logout();
-			clearUser();
-			toasts.success('Successfully logged out');
-			goto('/login');
-		} catch (error) {
-			console.error('Logout failed:', error);
-			toasts.error('Logout failed. Please try again.');
-		} finally {
-			logoutLoading = false;
-		}
-	}
 </script>
 
-<Card padding="lg" shadow="md">
-	<h1 class="text-trust-green mb-4 text-2xl font-bold">User Profile</h1>
+<svelte:head>
+	<title>Profile - TMT Medicine Detector</title>
+</svelte:head>
 
-	{#if loading}
-		<div class="space-y-6">
-			<div>
-				<Skeleton height="1.5rem" width="30%" className="mb-2" />
-				<Skeleton height="1rem" width="60%" />
-			</div>
-			<div>
-				<Skeleton height="1.5rem" width="40%" className="mb-2" />
-				<div class="space-y-2">
-					<Skeleton height="1rem" width="100%" />
-					<Skeleton height="1rem" width="90%" />
-					<Skeleton height="1rem" width="95%" />
-				</div>
-			</div>
-			<div>
-				<Skeleton height="1.5rem" width="25%" className="mb-2" />
-				<div class="flex flex-wrap gap-2">
-					<Skeleton height="2rem" width="5rem" rounded="full" />
-					<Skeleton height="2rem" width="7rem" rounded="full" />
-					<Skeleton height="2rem" width="6rem" rounded="full" />
-				</div>
-			</div>
-			<Skeleton height="2.5rem" width="8rem" />
+<div class="min-h-screen py-8 -mt-7">
+	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+		<!-- Page Header -->
+		<div class="mb-8">
+			<h1 class="text-3xl font-bold text-gray-900 mb-2">Profile Settings</h1>
+			<p class="text-[#607d8b]">Manage your account settings and preferences</p>
 		</div>
-	{:else if $user}
-		<div class="space-y-4">
-			<div>
-				<h2 class="text-neutral-gray text-lg font-medium">Email</h2>
-				<p class="text-neutral-gray">{$user.email}</p>
+		
+		<!-- User Info Card - Always Visible -->
+		<div class="mb-8">
+			<UserInfoCard {user} />
+		</div>
+		
+		<!-- Tabbed Interface -->
+		<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+			<!-- Tab Navigation -->
+			<div class="border-b border-gray-200">
+				<nav class="flex space-x-8 px-6" aria-label="Tabs">
+					{#each tabs as tab}
+						{#if (!('premiumOnly' in tab) || (tab.premiumOnly === true && user.isPremium))}
+							<button
+								on:click={() => setActiveTab(tab.id)}
+								class="py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 {activeTab === tab.id
+									? 'border-[#1a5f4a] text-[#1a5f4a]'
+									: 'border-transparent text-[#607d8b] hover:text-gray-700 hover:border-gray-300'}"
+							>
+								<span class="mr-2">{tab.icon}</span>
+								{tab.label}
+							</button>
+						{/if}
+					{/each}
+				</nav>
 			</div>
-			<div>
-				<h2 class="text-neutral-gray text-lg font-medium">Scan History</h2>
-				{#if scanHistory && scanHistory.length > 0}
-					<ul class="text-neutral-gray list-inside list-disc">
-						{#each scanHistory as scan}
-							<li>
-								{new Date(scan.createdAt).toLocaleDateString()}:
-								{scan.batchNumber}
-								<Badge status={mapVerdictToBadgeStatus(scan.verdict)} size="sm" className="ml-2" />
-							</li>
-						{/each}
-					</ul>
-				{:else}
-					<p class="text-neutral-gray">No scan history available.</p>
+			
+			<!-- Tab Content -->
+			<div class="p-6">
+				{#if activeTab === 'profile'}
+					<EditProfileTab bind:user />
+				{:else if activeTab === 'subscription' && user.isPremium}
+					<SubscriptionTab bind:subscription />
+				{:else if activeTab === 'security'}
+					<SecurityTab />
+				{:else if activeTab === 'delete'}
+					<DeleteAccountTab />
 				{/if}
 			</div>
-			<div>
-				<h2 class="text-neutral-gray text-lg font-medium">Badges</h2>
-				{#if userBadges && userBadges.length > 0}
-					<div class="mt-2 flex flex-wrap gap-2">
-						{#each userBadges as badge}
-							<Badge status="neutral" className="py-1 px-3">{badge}</Badge>
-						{/each}
-					</div>
-				{:else}
-					<p class="text-neutral-gray">No badges earned yet.</p>
-				{/if}
-			</div>
-			<Button
-				variant="danger"
-				on:click={handleLogout}
-				loading={logoutLoading}
-				disabled={logoutLoading}
-			>
-				{logoutLoading ? 'Logging out...' : 'Logout'}
-			</Button>
 		</div>
-	{:else}
-		<p class="text-neutral-gray">
-			Please <a href="/login" class="text-accent-blue hover:underline">login</a> to view your profile.
-		</p>
-	{/if}
-</Card>
+	</div>
+</div>
