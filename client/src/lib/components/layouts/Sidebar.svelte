@@ -2,13 +2,17 @@
     import { page } from '$app/stores';
     import { fade, fly, scale } from 'svelte/transition';
     import { quintOut, cubicOut } from 'svelte/easing';
-    import { session } from '$lib/stores/session'; // Assuming you have session store
+    import { session, sessionStore } from '$lib/stores/session';
+    import { goto } from '$app/navigation'; 
     import Icon from '../ui/Icon.svelte';
     import Tooltip from '$lib/components/ui/Tooltip.svelte';
+    import LogoutModal from '$lib/components/ui/LogoutModal.svelte';
     import { onMount } from 'svelte';
 
     export let expanded = true;
     export let mobile = false;
+
+    let showLogoutModal = false;
 
 	type NavItem = {
         id: string;
@@ -108,6 +112,26 @@
 
     function toggleSidebar() {
         expanded = !expanded;
+    }
+
+    // Function to open logout modal
+    function openLogoutModal() {
+        showLogoutModal = true;
+    }
+
+    // Function to close logout modal
+    function closeLogoutModal() {
+        showLogoutModal = false;
+    }
+
+    // Function to handle logout confirmation
+    function handleLogout() {
+        sessionStore.logout();        
+        // Close the modal
+        closeLogoutModal();
+        
+        // Redirect to landing page
+        goto('/');
     }
 
     // For animations
@@ -217,18 +241,18 @@
         <div class="border-t border-gray-200 p-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <div class="relative">
-                        <div
-                            class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5f4a] to-[#2c8a6d] text-sm font-medium text-white shadow-sm"
-                        >
-                            {'name' in user && user.name 
-                                ? user.name.charAt(0).toUpperCase() 
-                                : 'U'}
-                        </div>
-                        <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green-500"></div>
-                    </div>
-                    
                     {#if expanded}
+                        <div class="relative">
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5f4a] to-[#2c8a6d] text-sm font-medium text-white shadow-sm"
+                            >
+                                {'name' in user && user.name 
+                                    ? user.name.charAt(0).toUpperCase() 
+                                    : 'U'}
+                            </div>
+                            <div class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green-500"></div>
+                        </div>
+
                         <div class="ml-3" in:fade={{ duration: 200 }}>
                             <p class="text-sm font-medium text-gray-800">
                                 {'name' in user ? user.name : 'User Name'}
@@ -240,21 +264,24 @@
                     {/if}
                 </div>
                 
+                
                 {#if expanded}
                     <button
                         class="rounded-md p-1.5 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-200"
                         in:fade={{ duration: 200 }}
                         aria-label="Logout"
+                        on:click={openLogoutModal}
                     >
                         <Icon name="logout" className="h-5 w-5" />
                     </button>
                 {:else}
                     <Tooltip text="Logout" placement="right" offset={8}>
                         <button
-                            class="mt-2 rounded-md p-1 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 focus:outline-none"
+                            class="mb-2 rounded-md p-2 h-8 flex items-center justify-center text-gray-500 transition-colors hover:bg-red-50 hover:text-red-600 focus:outline-none"
                             aria-label="Logout"
+                            on:click={openLogoutModal}
                         >
-                            <Icon name="logout" className="h-4 w-4" />
+                            <Icon name="logout" className="h-8 w-7" />
                         </button>
                     </Tooltip>
                 {/if}
@@ -262,6 +289,13 @@
         </div>
     </aside>
 </div>
+
+<!-- Logout Confirmation Modal -->
+<LogoutModal 
+    open={showLogoutModal}
+    onClose={closeLogoutModal}
+    onConfirm={handleLogout}
+/>
 
 <style>
     /* Enhanced scrollbar styling */
