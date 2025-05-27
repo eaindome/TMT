@@ -142,10 +142,10 @@
 		<!-- Sidebar toggle button positioned at the edge -->
 		<button
 			on:click={toggleSidebar}
-			class="absolute -right-10.5 top-4 flex h-8 w-8 items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-[#1a5f4a] focus:outline-none focus:ring-2 focus:ring-[#1a5f4a]/20"
+			class="absolute -right-13 top-4 flex h-10 w-10 items-center justify-center rounded-lg border border-gray-300 bg-white shadow-md text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#1a5f4a] focus:outline-none focus:ring-1 focus:ring-[#1a5f4a]/10"
 			aria-label="Toggle sidebar"
 		>
-			<Icon name={expanded ? "chevrons-left" : "layout-sidebar"} className="h-4 w-4" />
+			<Icon name={expanded ? "menu" : "layout-sidebar"} className="h-4 w-4" />
 		</button>
 
         <!-- Navigation -->
