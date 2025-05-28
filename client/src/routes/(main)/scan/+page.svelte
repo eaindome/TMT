@@ -83,9 +83,9 @@
 <div class="min-h-screen pt-6 pb-16">
 	<div class="container mx-auto max-w-3xl px-4">
 		<!-- Header -->
-		<div class="mb-8 text-center">
-			<h1 class="mb-2 text-3xl font-bold text-gray-800">Scan Medicine</h1>
-			<p class="text-lg text-[#607d8b]">
+		<div class="mb-8 text-center -mt-4">
+			<h1 class="mb-2 text-3xl font-bold text-gray-800 text-left">Scan Medicine</h1>
+			<p class="text-lg text-[#607d8b] text-left">
 				Verify your medicine's authenticity by uploading a photo or using your camera
 			</p>
 		</div>

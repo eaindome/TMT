@@ -64,10 +64,10 @@
 	<title>Profile - TMT Medicine Detector</title>
 </svelte:head>
 
-<div class="min-h-screen py-8 -mt-7">
+<div class="min-h-screen py-8">
 	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 		<!-- Page Header -->
-		<div class="mb-8">
+		<div class="mb-8  -mt-5">
 			<h1 class="text-3xl font-bold text-gray-900 mb-2">Profile Settings</h1>
 			<p class="text-[#607d8b]">Manage your account settings and preferences</p>
 		</div>
