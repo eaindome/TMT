@@ -3,6 +3,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import NotificationPanel from '$lib/components/ui/NotificationPanel.svelte';
 
 	// Sidebar state management
 	let sidebarExpanded = true;
@@ -119,5 +120,7 @@
 				<slot />
 			</div>
 		</main>
+
+		<NotificationPanel />
 	</div>
 </div>

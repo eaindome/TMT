@@ -7,6 +7,7 @@
 	import Icon from '../ui/Icon.svelte';
 	import Tooltip from '$lib/components/ui/Tooltip.svelte';
 	import LogoutModal from '$lib/components/ui/LogoutModal.svelte';
+	import { notificationStore, toggleNotifications } from '$lib/stores/notificationStore';
 	import { onMount } from 'svelte';
 
 	export let expanded = true;
@@ -202,6 +203,13 @@
 		expanded = !expanded;
 	}
 
+	function handleNotificationClick(event: Event) {
+		event.preventDefault();
+		event.stopPropagation();
+		// Pass real notifications data here
+		toggleNotifications([]);
+	}
+
 	// Function to open logout modal
 	function openLogoutModal() {
 		showLogoutModal = true;
@@ -318,7 +326,7 @@
 											<span
 												class="ml-auto rounded-full px-2 py-0.5 text-xs font-semibold
                                                 {item.badge === 'New'
-													? 'bg-blue-100 text-blue-700'
+													? 'bg-blue-100 text-green-700'
 													: 'bg-[#1a5f4a]/10 text-[#1a5f4a]'}"
 											>
 												{item.badge}
@@ -418,51 +426,102 @@
 						<ul class="space-y-1">
 							{#each category.items as item, i}
 								<li class="relative">
-									<a
-										href={item.href}
-										class="group flex items-center rounded-lg p-3 text-sm font-medium transition-all duration-200
-                                            {isActive(item.href)
-											? 'bg-[#1a5f4a]/10 text-[#1a5f4a]'
-											: 'text-gray-600 hover:bg-white hover:text-[#1a5f4a]'}"
-										style="animation-delay: {categoryIndex * 100 + i * 50}ms"
-									>
-										<div class="relative flex-shrink-0">
-											{#if isActive(item.href)}
+									<!-- Special handling for notifications item -->
+									{#if item.id === 'notifications'}
+										<a
+											href={item.href}
+											on:click={handleNotificationClick}
+											class="group flex items-center rounded-lg p-3 text-sm font-medium transition-all duration-200
+												{isActive(item.href)
+												? 'bg-[#1a5f4a]/10 text-[#1a5f4a]'
+												: 'text-gray-600 hover:bg-white hover:text-[#1a5f4a]'}"
+											style="animation-delay: {categoryIndex * 100 + i * 50}ms"
+										>
+											<div class="relative flex-shrink-0">
+												{#if isActive(item.href)}
+													<div
+														class="absolute top-1/2 -left-3 h-6 w-1 -translate-y-1/2 rounded-r-full bg-[#1a5f4a]"
+													></div>
+												{/if}
 												<div
-													class="absolute top-1/2 -left-3 h-6 w-1 -translate-y-1/2 rounded-r-full bg-[#1a5f4a]"
-												></div>
-											{/if}
-											<div
-												class="{isActive(item.href)
-													? 'bg-[#1a5f4a]/20'
-													: 'bg-white group-hover:bg-[#1a5f4a]/10'} flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
-											>
-												<Icon
-													name={item.icon}
-													className="h-4 w-4 {isActive(item.href)
-														? 'text-[#1a5f4a]'
-														: 'text-gray-500 group-hover:text-[#1a5f4a]'}"
-												/>
+													class="{isActive(item.href)
+														? 'bg-[#1a5f4a]/20'
+														: 'bg-white group-hover:bg-[#1a5f4a]/10'} flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+												>
+													<Icon
+														name={item.icon}
+														className="h-4 w-4 {isActive(item.href)
+															? 'text-[#1a5f4a]'
+															: 'text-gray-500 group-hover:text-[#1a5f4a]'}"
+													/>
+												</div>
 											</div>
-										</div>
 
-										<span class="ml-3 whitespace-nowrap">
-											{item.label}
-										</span>
-
-										{#if item.badge}
-											<span
-												class="ml-auto rounded-full px-2 py-0.5 text-xs font-semibold
-                                                {item.badge === 'Hot'
-													? 'bg-red-100 text-red-700'
-													: item.badge === 'New'
-														? 'bg-green-100 text-green-700'
-														: 'bg-[#1a5f4a]/10 text-[#1a5f4a]'}"
-											>
-												{item.badge}
+											<span class="ml-3 whitespace-nowrap">
+												{item.label}
 											</span>
-										{/if}
-									</a>
+
+											{#if item.badge}
+												<span
+													class="ml-auto rounded-full px-2 py-0.5 text-xs font-semibold
+													{item.badge === 'Hot'
+														? 'bg-red-100 text-red-700'
+														: item.badge === 'New'
+															? 'bg-green-100 text-green-700'
+															: 'bg-[#1a5f4a]/10 text-[#1a5f4a]'}"
+												>
+													{item.badge}
+												</span>
+											{/if}
+										</a>
+									{:else}
+										<!-- Regular navigation items -->
+										<a
+											href={item.href}
+											class="group flex items-center rounded-lg p-3 text-sm font-medium transition-all duration-200
+												{isActive(item.href)
+												? 'bg-[#1a5f4a]/10 text-[#1a5f4a]'
+												: 'text-gray-600 hover:bg-white hover:text-[#1a5f4a]'}"
+											style="animation-delay: {categoryIndex * 100 + i * 50}ms"
+										>
+											<div class="relative flex-shrink-0">
+												{#if isActive(item.href)}
+													<div
+														class="absolute top-1/2 -left-3 h-6 w-1 -translate-y-1/2 rounded-r-full bg-[#1a5f4a]"
+													></div>
+												{/if}
+												<div
+													class="{isActive(item.href)
+														? 'bg-[#1a5f4a]/20'
+														: 'bg-white group-hover:bg-[#1a5f4a]/10'} flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+												>
+													<Icon
+														name={item.icon}
+														className="h-4 w-4 {isActive(item.href)
+															? 'text-[#1a5f4a]'
+															: 'text-gray-500 group-hover:text-[#1a5f4a]'}"
+													/>
+												</div>
+											</div>
+
+											<span class="ml-3 whitespace-nowrap">
+												{item.label}
+											</span>
+
+											{#if item.badge}
+												<span
+													class="ml-auto rounded-full px-2 py-0.5 text-xs font-semibold
+													{item.badge === 'Hot'
+														? 'bg-red-100 text-red-700'
+														: item.badge === 'New'
+															? 'bg-green-100 text-green-700'
+															: 'bg-[#1a5f4a]/10 text-[#1a5f4a]'}"
+												>
+													{item.badge}
+												</span>
+											{/if}
+										</a>
+									{/if}
 								</li>
 							{/each}
 						</ul>
