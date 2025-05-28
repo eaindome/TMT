@@ -122,11 +122,11 @@
 
     function getNotificationColor(type: string) {
         switch (type) {
-            case 'reply': return 'text-blue-600';
-            case 'like': return 'text-red-600';
-            case 'mention': return 'text-green-600';
-            case 'system': return 'text-gray-600';
-            default: return 'text-gray-600';
+            case 'reply': return 'text-blue-500';
+            case 'like': return 'text-rose-500';
+            case 'mention': return 'text-green-500';
+            case 'system': return 'text-gray-500';
+            default: return 'text-gray-500';
         }
     }
 
@@ -137,12 +137,10 @@
     }
 
     function markAsRead(notificationId: number) {
-        // Implementation for marking notification as read
         console.log('Mark as read:', notificationId);
     }
 
     function markAllAsRead() {
-        // Implementation for marking all notifications as read
         console.log('Mark all as read');
     }
 
@@ -157,7 +155,7 @@
 <!-- Backdrop overlay -->
 {#if isVisible}
     <div
-        class="fixed inset-0 z-40 backdrop-blur-sm bg-white/10 transition-all duration-200"
+        class="fixed inset-0 z-40 backdrop-blur-[2px] bg-black/5 transition-all duration-200"
         in:fade={{ duration: 200 }}
         out:fade={{ duration: 200 }}
     ></div>
@@ -166,31 +164,31 @@
 <!-- Notification Panel -->
 {#if isVisible}
     <div
-        class="notification-panel fixed right-0 top-0 z-50 h-full w-full bg-white shadow-xl sm:w-[400px]"
+        class="notification-panel fixed right-0 top-0 z-50 h-full w-full bg-white/95 backdrop-blur-md border-l border-gray-200/50 shadow-2xl sm:w-[380px]"
         in:fly={{ x: 400, duration: 300, easing: cubicOut }}
         out:fly={{ x: 400, duration: 250, easing: cubicOut }}
     >
         <!-- Header -->
-        <div class="flex items-center justify-between border-b border-gray-200 p-4">
+        <div class="flex items-center justify-between border-b border-gray-100 p-5 bg-white/80 backdrop-blur-sm">
             <div class="flex items-center">
-                <div class="flex items-center justify-center rounded-lg bg-[#1a5f4a]/10 p-2">
-                    <Icon name="bell" className="h-5 w-5 text-[#1a5f4a]" />
+                <div class="flex items-center justify-center rounded-xl bg-[#1a5f4a]/10 p-2.5">
+                    <Icon name="bell" className="h-4 w-4 text-[#1a5f4a]" />
                 </div>
-                <h2 class="ml-3 text-lg font-semibold text-gray-900">Notifications</h2>
+                <h2 class="ml-3 text-lg font-semibold text-gray-800">Notifications</h2>
             </div>
             
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-1">
                 <button
                     on:click={markAllAsRead}
-                    class="text-sm text-[#1a5f4a] hover:text-[#2c8a6d] transition-colors"
+                    class="px-2 py-1 text-xs font-medium text-[#1a5f4a] hover:text-[#2c8a6d] hover:bg-[#1a5f4a]/5 rounded-md transition-colors"
                 >
                     Mark all read
                 </button>
                 <button
                     on:click={hideNotifications}
-                    class="rounded-md p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+                    class="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
                 >
-                    <Icon name="x" className="h-5 w-5" />
+                    <Icon name="x" className="h-4 w-4" />
                 </button>
             </div>
         </div>
@@ -199,32 +197,32 @@
         <div class="flex-1 overflow-y-auto">
             {#each Object.values(groupedNotifications).filter(Boolean) as group}
                 {#if group}
-                <div class="border-b border-gray-100 last:border-b-0">
+                <div class="last:border-b-0">
                     <!-- Group Header -->
-                    <div class="sticky top-0 bg-gray-50 px-4 py-2">
-                        <h3 class="text-sm font-medium text-gray-700">{group.label}</h3>
+                    <div class="sticky top-0 bg-white/90 backdrop-blur-sm px-5 py-2.5 border-b border-gray-50">
+                        <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider">{group.label}</h3>
                     </div>
 
                     <!-- Notifications in Group -->
-                    <div class="divide-y divide-gray-100">
-                        {#each group.items as notification}
+                    <div>
+                        {#each group.items as notification, index}
                             <button
                                 type="button"
-                                class="w-full text-left p-4 transition-colors hover:bg-gray-50 {notification.unread ? 'bg-blue-50' : ''}"
+                                class="w-full text-left px-5 py-4 transition-all duration-150 hover:bg-gray-50/80 active:bg-gray-100/50 {notification.unread ? 'bg-[#1a5f4a]/3 border-l-2 border-[#1a5f4a]/30' : ''} {index !== group.items.length - 1 ? 'border-b border-gray-50' : ''}"
                                 on:click={() => markAsRead(notification.id)}
                             >
                                 <div class="flex items-start space-x-3">
                                     <!-- Avatar or Icon -->
-                                    <div class="flex-shrink-0">
+                                    <div class="flex-shrink-0 mt-0.5">
                                         {#if notification.avatar}
-                                            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5f4a] to-[#2c8a6d] text-xs font-medium text-white">
+                                            <div class="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#1a5f4a] to-[#2c8a6d] text-xs font-semibold text-white shadow-sm">
                                                 {notification.avatar}
                                             </div>
                                         {:else}
-                                            <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100">
+                                            <div class="flex h-7 w-7 items-center justify-center rounded-full bg-gray-100">
                                                 <Icon 
                                                     name={getNotificationIcon(notification.type)} 
-                                                    className="h-4 w-4 {getNotificationColor(notification.type)}" 
+                                                    className="h-3.5 w-3.5 {getNotificationColor(notification.type)}" 
                                                 />
                                             </div>
                                         {/if}
@@ -232,18 +230,18 @@
 
                                     <!-- Content -->
                                     <div class="flex-1 min-w-0">
-                                        <div class="flex items-center justify-between">
-                                            <p class="text-sm font-medium text-gray-900 truncate">
+                                        <div class="flex items-start justify-between">
+                                            <p class="text-sm font-medium text-gray-800 leading-snug">
                                                 {notification.title}
                                             </p>
                                             {#if notification.unread}
-                                                <div class="ml-2 h-2 w-2 rounded-full bg-[#1a5f4a]"></div>
+                                                <div class="ml-2 mt-1.5 h-1.5 w-1.5 rounded-full bg-[#1a5f4a] flex-shrink-0"></div>
                                             {/if}
                                         </div>
-                                        <p class="text-sm text-gray-600 line-clamp-2">
+                                        <p class="text-sm text-gray-600 leading-relaxed mt-0.5 line-clamp-2">
                                             {notification.message}
                                         </p>
-                                        <p class="text-xs text-gray-400 mt-1">
+                                        <p class="text-xs text-gray-400 mt-2">
                                             {notification.time}
                                         </p>
                                     </div>
@@ -257,18 +255,20 @@
 
             <!-- Empty State -->
             {#if notifications.length === 0 && mockNotifications.length === 0}
-                <div class="flex flex-col items-center justify-center h-64 text-gray-500">
-                    <Icon name="bell" className="h-12 w-12 text-gray-300 mb-4" />
-                    <p class="text-lg font-medium">No notifications</p>
-                    <p class="text-sm">You're all caught up!</p>
+                <div class="flex flex-col items-center justify-center h-64 text-gray-400 px-8">
+                    <div class="rounded-full bg-gray-100 p-4 mb-4">
+                        <Icon name="bell" className="h-8 w-8 text-gray-300" />
+                    </div>
+                    <p class="text-base font-medium text-gray-600 mb-1">All caught up!</p>
+                    <p class="text-sm text-gray-400 text-center">No new notifications to show</p>
                 </div>
             {/if}
         </div>
 
         <!-- Footer -->
-        <div class="border-t border-gray-200 p-4">
+        <div class="border-t border-gray-100 p-4 bg-white/80 backdrop-blur-sm">
             <button
-                class="w-full rounded-lg bg-[#1a5f4a] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#2c8a6d]"
+                class="w-full rounded-lg bg-[#1a5f4a] px-4 py-2.5 text-sm font-medium text-white transition-all duration-200 hover:bg-[#2c8a6d] hover:shadow-md active:scale-[0.98]"
             >
                 View All Notifications
             </button>
@@ -283,5 +283,23 @@
         line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+    }
+
+    /* Custom scrollbar */
+    .notification-panel ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .notification-panel ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .notification-panel ::-webkit-scrollbar-thumb {
+        background-color: rgba(156, 163, 175, 0.3);
+        border-radius: 20px;
+    }
+
+    .notification-panel ::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(156, 163, 175, 0.5);
     }
 </style>
