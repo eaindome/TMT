@@ -1,17 +1,39 @@
-<script lang="ts">
-	import Icon from '$lib/components/ui/Icon.svelte';
-
-	export let type: 'conversations' | 'my-discussions' | 'my-posts' = 'conversations';
-	export let activeTab: 'all' | 'mention' | 'reply' | 'message' = 'all';
-	export let filters: {
+<script context="module" lang="ts">
+	export interface Filters {
 		searchQuery?: string;
-		dateRange?: string;
+		folder?: string;
 		tag?: string;
 		postStatus?: string;
 		status?: string;
-	} = {};
+		dateRange?: string;
+	}
+</script>
+
+<script lang="ts">
+	import Icon from '$lib/components/ui/Icon.svelte';
+
+	export let type = 'conversations';
+	export let activeTab = 'all';
+
+	export let filters: Filters = {};
 
 	function getEmptyStateContent() {
+		if (type === 'saved-posts') {
+			if (filters.searchQuery || filters.folder !== 'all' || filters.tag !== 'all' || filters.postStatus !== 'all') {
+				return {
+					icon: 'search',
+					title: 'No saved posts match your filters',
+					description: 'Try adjusting your search criteria or filters to find saved posts.'
+				};
+			}
+
+			return {
+				icon: 'collection',
+				title: 'No saved posts yet',
+				description: 'Start saving posts that you find useful or want to read later by clicking the bookmark icon.'
+			};
+		}
+
 		if (type === 'my-discussions') {
 			if (filters.searchQuery || filters.dateRange !== 'all' || filters.tag !== 'all' || filters.postStatus !== 'all') {
 				return {
@@ -96,7 +118,17 @@
 		{content.description}
 	</p>
 
-	{#if type === 'my-discussions'}
+	{#if type === 'saved-posts'}
+		<div class="mt-6">
+			<a
+				href="/forum"
+				class="inline-flex items-center px-4 py-2 bg-[#1a5f4a] text-white text-sm font-medium rounded-lg hover:bg-[#2c8a6d] transition-colors"
+			>
+				<Icon name="collection" className="w-4 h-4 mr-2" />
+				Explore Forum
+			</a>
+		</div>
+	{:else if type === 'my-discussions'}
 		<div class="mt-6">
 			<a
 				href="/forum"
