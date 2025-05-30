@@ -6,6 +6,8 @@
 		postStatus?: string;
 		status?: string;
 		dateRange?: string;
+		timeRange?: string;
+		activityType?: string;
 	}
 </script>
 
@@ -18,6 +20,22 @@
 	export let filters: Filters = {};
 
 	function getEmptyStateContent() {
+		if (type === 'activity') {
+			if (filters.timeRange !== 'all' || filters.activityType !== 'all') {
+				return {
+					icon: 'search',
+					title: 'No activity found',
+					description: 'Try adjusting your filters to see more activity.'
+				};
+			}
+			
+			return {
+				icon: 'clock',
+				title: 'No recent activity',
+				description: 'Start engaging with the community to see your activity timeline here.'
+			};
+		}
+
 		if (type === 'saved-posts') {
 			if (filters.searchQuery || filters.folder !== 'all' || filters.tag !== 'all' || filters.postStatus !== 'all') {
 				return {
@@ -118,7 +136,17 @@
 		{content.description}
 	</p>
 
-	{#if type === 'saved-posts'}
+	{#if type === 'activity'}
+		<div class="mt-6">
+			<a
+				href="/forum"
+				class="inline-flex items-center px-4 py-2 bg-[#1a5f4a] text-white text-sm font-medium rounded-lg hover:bg-[#2c8a6d] transition-colors"
+			>
+				<Icon name="clock" className="w-4 h-4 mr-2" />
+				Explore Forum
+			</a>
+		</div>
+	{:else if type === 'saved-posts'}
 		<div class="mt-6">
 			<a
 				href="/forum"
