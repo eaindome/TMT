@@ -3,8 +3,26 @@
 
 	export let type = 'conversations';
 	export let activeTab = 'all';
+	export let filters: { searchQuery?: string; status?: string; tag?: string } = {};
 
 	function getEmptyStateContent() {
+		if (type === 'my-posts') {
+			if (filters.searchQuery || filters.status !== 'all' || filters.tag !== 'all') {
+				return {
+					icon: 'search',
+					title: 'No posts match your filters',
+					description: 'Try adjusting your search criteria or filters to find posts.'
+				};
+			}
+
+			return {
+				icon: 'document-text',
+				title: 'No posts yet',
+				description:
+					'Start sharing your experiences with the community by creating your first post.'
+			};
+		}
+
 		if (type === 'conversations') {
 			switch (activeTab) {
 				case 'mention':
@@ -58,7 +76,16 @@
 		{content.description}
 	</p>
 
-	{#if type === 'conversations' && activeTab === 'all'}
+	{#if type === 'my-posts'}
+		<div class="mt-6">
+			<button
+				class="inline-flex items-center rounded-lg bg-[#1a5f4a] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#2c8a6d]"
+			>
+				<Icon name="plus" className="w-4 h-4 mr-2" />
+				Create Your First Post
+			</button>
+		</div>
+	{:else if type === 'conversations' && activeTab === 'all'}
 		<div class="mt-6">
 			<a
 				href="/forum"
