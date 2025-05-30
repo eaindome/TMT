@@ -14,6 +14,7 @@
 	export let mobile = false;
 
 	let showLogoutModal = false;
+	let notificationsPanelActive = false;
 
 	// Track if forum is active to show secondary sidebar
 	$: isForumActive = $page.url.pathname.startsWith('/forum');
@@ -196,18 +197,45 @@
 
 	// For navigation
 	$: isActive = (path: string) => {
-		return $page.url.pathname.startsWith(path);
-	};
+        const currentPath = $page.url.pathname;
+        
+        // For exact matches or when we want to highlight notifications panel
+        if (path === '/forum/notifications' && $notificationStore.isVisible) {
+            return true;
+        }
+        
+        // For forum home, only match exact path
+        if (path === '/forum') {
+            return currentPath === '/forum';
+        }
+        
+        // For other forum routes, match exactly
+        if (path.startsWith('/forum/')) {
+            return currentPath === path;
+        }
+        
+        // For non-forum routes, use startsWith for nested routes
+        return currentPath.startsWith(path) && currentPath !== '/forum';
+    };
 
 	function toggleSidebar() {
 		expanded = !expanded;
 	}
+
+	// Subscribe to notification store to track panel state
+    $: if ($notificationStore.isVisible) {
+        notificationsPanelActive = true;
+    } else {
+        notificationsPanelActive = false;
+    }
 
 	function handleNotificationClick(event: Event) {
 		event.preventDefault();
 		event.stopPropagation();
 		// Pass real notifications data here
 		toggleNotifications([]);
+		// Update active state
+        notificationsPanelActive = !notificationsPanelActive;
 	}
 
 	// Function to open logout modal
